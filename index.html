@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/themes.css"/>
+  </head>
+  <body>
+
+	<article>
+      <section>
+      
+      <h1>Writing Tests</h1>
+      <h1>Analysing Tests</h1>
+      <p>People arguably spend as much time analysing test failures as much as they do writing tests. More often  than not we run into such situations. This is why a good test report is important. It should not just tell you what failure has occured but also give you information that helps your analysis.</p>
+    
+    </section>
+    
+    <section>
+    <p>
+    Have you ever come across situations where:
+    You have a separate team to analyze why your tests failed?
+    Analyzed a test up and down and not been able to figure out why it failed?
+    You constantly have to refer back to the environment where your tests ran?
+
+    If you have been into any such situations then it clearly points to the fact that your test reports are not working well for you.
+    </p>
+    </section>
+
+    <section>
+    <h1>BAD REPORT</h1>
+    <p>
+    This here is a basic report. Tells you how many test ran. Points out that a test has failed and tells you which one that is. Doesn't give you much information of what went wrong let alone what might have caused it. 
+    </p>
+    </section>
+
+    <section>
+    <h1>SLIGHTLY BETTER?</h1>
+    <p>
+    This looks like a slightly better one. It tells you what failure occured and also provides a stacktrace of the failue. This tells you if it was a test assertion that failed or an unknown error was thrown. 
+    </p>
+    </section>
+
+    <section>
+    <h1>IMPROVED</h1>
+    <p>
+    Here we have a report that not only points out what test failed along with a stacktrace but more importantly gives a sreenshot of when the failure occured. Gives us more context on what was exactly going on when the test had failed. 
+    </p>
+    </section>
+
+    <section>
+    <h1>GOOD REPORT</h1>
+    <p>
+    This report not only tells us where the failure occured, it gives everything that led to the failure. It gives you all the steps that executed before and led to the failure. In a lot of cases it is not line that failed but the steps before it that are important. You might not have navigated to the right page or the right button wasn't clicked. The final failure might be just a verification that the form was filled.
+    This information is available only if the entire test is in front of you. This gives us VISIBILITY in the test. This is the most important factor that differentiates a good and a bad test report. Consider if you go to a doctor it is just not the symptoms that interests him, he will need all the additional information like previous illness, allergies, eating habits etc to analyse the situation correctly and diagnose you.
+   Another key important informatom is the data that flows in the reports. Perhaps an incorrect value is being passed. You can see in the report what values are being passed into the tests. These can play a key role in causing a test failure. A good test report should give all this information right in front.  
+    </p>
+    </section>
+
+    <section>
+    <h1>Environment Variables in Report</h1>
+    <p>
+    A number of times the environment on which the test is running breaks the test. It is the right version of the browser, or java, was the display set, on what OS did the test run? You shouldn't have to go back and figure out your environment details to analyse the failure. This information should be embedded in the reports itself. It gives a very clear picture of the test execution which is most important when you are trying to figure out the cause of a  test failure.
+    </p>
+    </section>
+
+    <section>
+    <h1>DATA is VIDHATA</h1>
+    <p>
+    
+    </p>
+    </section>
+    
+  </article>
+
+
+
+   
+  <script src="js/bespoke.min.js"></script>
+  <script src="js/demo.js"></script>
+
+	</body>
+</html>
