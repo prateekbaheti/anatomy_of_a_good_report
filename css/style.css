@@ -102,12 +102,12 @@ footer a {
 	bottom: 0;
 }
 
-h1 {
+h1, p {
 	color: white;
 	font-family: Raleway Dots;
 
 	/* Fix thin font rendering on Windows */
-	font-size: 156px;
+	font-size: 56px;
 	-webkit-transform: scale(0.5);
 	-moz-transform: scale(0.5);
 	-ms-transform: scale(0.5);
@@ -129,6 +129,8 @@ h1 {
 	margin-left: -388px;
 }
 
+
+
 h2 {
 	-webkit-transition: opacity 2s ease;
 	-moz-transition: opacity 2s ease;
@@ -148,6 +150,7 @@ h2 {
 	color: white;
 	opacity: 0.9;
 }
+
 
 header p {
 	-webkit-transition: opacity .5s ease;
