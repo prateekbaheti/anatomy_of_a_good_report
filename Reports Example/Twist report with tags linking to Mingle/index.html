@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Twist Test Results</title>
+    <meta content='no-cache' http-equiv='cache-control'/>
+    <meta content='no-cache' http-equiv='pragma'/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="execution_results.js" type="text/javascript"></script>
+    <script src="js/scenarios.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/lightbox.js"></script>
+    <script type="text/javascript" src='js/html5.js'></script>
+    <script type="text/javascript">
+      
+      $(document).ready(function() {
+      var summaryHolder = document.getElementById('summaryHolder');
+      var listOfScenarios = document.getElementById('listOfScenarios');
+      var scenarioFilter = document.getElementById('scenario_filter');
+      var notes = document.getElementById('notes');
+      var searchBox = document.getElementById('searchScenario');
+
+          $(window).resize(function(){
+            $(listOfScenarios).height(getScenariosListHeight());
+          });
+
+          $(document).scroll(function () {
+            $(listOfScenarios).height(getScenariosListHeight());
+
+            a = $(document).scrollTop();
+            b = 190;
+            if (a > b){
+                $('aside').addClass('fixed');
+            }
+            else {
+                $('aside').removeClass('fixed');
+            }
+          }); 
+        
+          function getScenariosListHeight(){
+            return ($(window).height() - $('#scenarioContainer').position().top) + 80 ;
+          }
+
+          window.twist.getScenarioProcessor = function() {
+          return new ScenarioProcessor(document.getElementById('scenarioContainer'));
+          };
+
+          window.twist.onScenarioDisplayed = function(scenario) {
+            initLightbox();
+          linkTagsToMingleCard();
+
+          }
+
+
+          window.twist.renderSummary(summaryHolder);
+          window.twist.renderNotes(notes);
+          window.twist.renderScenariosList(listOfScenarios);
+          window.twist.renderFilters(scenarioFilter);
+          window.twist.initializeSearchBox(searchBox);
+
+          
+
+
+      });
+
+function linkTagsToMingleCard() {
+          $('#tagsHolder').find('li').each(function(index, value) {
+            var tag = $(value).text();
+            console.log(tag);
+            if (tag.length > 0) {
+               var a = document.createElement('a');
+               var cardNo;
+               if(tag == 'search'){
+                cardNo = 1 ;
+               }
+                if (tag == 'login'){
+                  cardNo = 2;
+                }
+                if (tag == 'filter search results'){
+                  cardNo = 3;
+                }
+               a.setAttribute('href', 'http://sabu:8080/projects/shop123/cards/' + cardNo);
+               a.appendChild(document.createTextNode(tag));
+               
+               $(value).empty();
+               $(value).append(a);
+          }
+      });
+}
+
+        </script>
+
+      </head>
+      <body>	
+        <header>
+        <div>
+             <div id="summaryHolder"></div>
+        </div>
+        </header>
+        <div id='notes'>
+        </div>
+        <section>
+        <h3>Scenarios</h3>
+        <aside id='aside'>
+        <div class='filters' id='scenario_filter'>
+        </div>
+        <input id='searchScenario' placeholder='type scenario name' type='text'/>
+        <div id="listOfScenarios">
+        </div>
+        </aside>
+        <section id='scenarioContainer'>
+        </section>
+        <div id="congratulationsHidden">
+          <p>Congratulations! You've gone all <span class="green">green</span> and saved the environment!</p>
+        </div>
+
+      </body>
+    </html>
+
+
