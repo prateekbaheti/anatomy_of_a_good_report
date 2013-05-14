@@ -24,13 +24,13 @@
 		
 		selectedThemeIndex = 0;
 
-		initInstructions();
+		//initInstructions();
 		initKeys();
-		initSlideGestures();
+		/*initSlideGestures();
 		initThemeGestures();
 		initButtons();
 
-		selectTheme(0);
+		selectTheme(0);*/
 	}
 
 	function initInstructions() {
@@ -55,9 +55,6 @@
 
 			key === 37 && deck.prev();
 			(key === 32 || key === 39) && deck.next();
-
-			key === 38 && prevTheme();
-			key === 40 && nextTheme();
 		});
 	}
 
