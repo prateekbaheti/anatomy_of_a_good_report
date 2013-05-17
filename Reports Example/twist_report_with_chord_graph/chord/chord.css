@@ -1,0 +1,14 @@
+#chorddiagram {
+  font: 10px sans-serif;
+  margin: 20px;
+}
+
+#chorddiagram .chords {
+  margin: 20px;
+}
+
+#chorddiagram .chord path {
+  fill-opacity: .67;
+  stroke: #000;
+  stroke-width: .5px;
+}
