@@ -2,46 +2,65 @@ var r1 = 600 / 2;
 var r0 = r1 - 20;
 
 
-d3.csv("../real_data.csv", function(csv){
-    var data=csv;
+d3.json("../execution_results.js", function(json){
+    var freq_table = {}; 
+    var uniques= [];
+  
+    var scenarios = json.scenarios.map(function(s) {
+      return {"name":s.name, "tags":(s.tags || s.runs[0].tags).map(function(t){return t.name})};
+    });
 
-    var parse = d3.time.format("%Y-%m-%d").parse;
+    scenarios.forEach(function(scenario) {
+      scenario.tags.forEach(function(tag) { freq_table[tag] = ++freq_table[tag] || 1;});
+      uniques = uniques.concat(scenario.tags.filter(function(t) { return uniques.indexOf(t) == -1;}));
+    }); 
 
-    data.forEach(function(s) {
-        s.date = parse(s.date);
-    })
+    function compareFrequency(tag1,tag2) {
+      return freq_table[tag2] - freq_table[tag1];
+    }
 
-    var juices=d3.nest()
-        .key(function(d) {return d.juice;})
-        .key(function(d) {return d.emp_id;})
-        .rollup(function(d) {return d.length;})
-        .entries(data);
-
-
-    juices.forEach(function(j) {
-        j.values = j.values.map(function(v) {
-            return v.key;
-        });
+    var top_ten_tags = uniques.sort(compareFrequency).slice(0,10);
+  
+    var top_scenarios = scenarios.filter(function(s) {
+      for (t1 in top_ten_tags) {
+        for (t2 in s.tags) {
+          if (top_ten_tags[t1] == s.tags[t2]) {
+            return true;
+          }
+        }
+      }
+      return false;
+    });
+    
+    top_scenarios.forEach(function(s) {
+      s.tags = s.tags.filter(function(t) {
+        return top_ten_tags.indexOf(t) != -1;
+      });
     });
 
     var matrix = [];
-    for(i = 0; i < juices.length; i++) {
-        matrix[i] = new Array(juices.length);
+    for(i = 0; i < top_ten_tags.length; i++) {
+        matrix[i] = new Array(top_ten_tags.length);
+        for(j = 0; j < top_ten_tags.length; j++) {
+          matrix[i][j] = 0;
+        }
     }
 
-    var m = 0;
-    juices.forEach(function(i){
-        var j1 = d3.values(i)[1];
-        var n = 0;
-        juices.forEach(function(j){
-            var j2 = d3.values(j)[1];
-            var common = commonElements(j1, j2);
-            matrix[m][n] = common.length;
-            matrix[n][m] = common.length;
-            n++;
-        });
-        matrix[m][m] = elementsInAButNotInRest(j1, juices).length;
-        m++;
+    top_scenarios.forEach(function(s) {
+      //for every scenario
+      for (i in s.tags) {
+        var m = top_ten_tags.indexOf(s.tags[i]);
+        if (s.tags.length == 1) {
+          matrix[m][m] = ++matrix[m][m] || 1;  
+          continue;
+        }
+        for (j in s.tags) {
+          var n = top_ten_tags.indexOf(s.tags[j]);
+          if (m == n) continue;
+          matrix[m][n] = ++matrix[m][n] || 1; 
+          //matrix[n][m] = matrix[m][n];
+        }
+      }
     });
 
     var chord = d3.layout.chord()
@@ -56,14 +75,14 @@ d3.csv("../real_data.csv", function(csv){
 
     var fill = d3.scale.category20();
 
-    var svg = d3.select("#chorddigram")
+    var svg = d3.select("#chorddiagram")
         .append("svg")
         .attr("class", "chords")
         .attr("width", width)
-        .attr("height", height)
+        .attr("height", 800)
         .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-        .attr("height", 700)
+        .attr("transform", "translate(" + width / 2 + "," + 800/ 2 + ")")
+        .attr("height", 800)
         .attr("width", width);
 
     var g = svg.selectAll("g.group")
@@ -98,7 +117,7 @@ d3.csv("../real_data.csv", function(csv){
         })
         .text(function(d) {
             var index = d.index;
-            return juices[index].key;
+            return top_ten_tags[index];
         });
 
     g.append("svg:text")
