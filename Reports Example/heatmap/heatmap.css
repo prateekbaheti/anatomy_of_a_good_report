@@ -1,0 +1,39 @@
+.scenario {
+  clear: both;
+}
+
+
+.run {
+  float: left;
+  width: 30px;
+  height: 30px;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  text-align: center;
+}
+
+.pass {
+  background-color: lightsteelblue;
+}
+
+.fail {
+  background-color: steelblue;
+}
+
+.scenarioName {
+  height: 30px;
+  width: 60px;
+  float: left;
+}
+
+.scenarioName p{
+  margin:0;
+}
+
+.buildLabels {
+  clear:  both;
+}
+
+.buildLabels >* {
+  float: left;
+}
